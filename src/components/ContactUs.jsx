@@ -33,8 +33,8 @@ const contactDetails = [
     id: "03",
     title: "Address",
     icon: "🏢",
-    info: "B24 Aashram Road Chhjarshi sector 63 Noida Uttar Pradesh India ",
-    link: "https://maps.app.goo.gl/ex7pH5VwjJGfNf196",
+    info: "Gali No. 2, Fng Vihar 2, near Garhi, Chokhandi, Sector 121, Noida, Uttar Pradesh 201309",
+    link: "https://www.google.com/maps/search/?api=1&query=Gali+No.+2%2C+Fng+Vihar+2%2C+near+Garhi%2C+Chokhandi%2C+Sector+121%2C+Noida%2C+Uttar+Pradesh+201309",
   },
   { id: "04", title: "Working Hours", icon: "⏰", info: "Mon-Sat: 9AM - 7PM" },
 ];
