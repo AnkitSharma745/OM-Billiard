@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
 import PoolTables from "@/src/screens/PoolTables";
+import { pageMetadata } from "@/src/lib/site";
 
-export const metadata: Metadata = {
-  title: "Pool & snooker tables | OM Billiard",
-  description: "Explore pool and snooker tables in the OM Billiard catalog.",
-};
+export const metadata = pageMetadata("Pool & Snooker Tables", "Compare OM Billiard pool and snooker tables, recorded sizes and listed prices. Ask about installation and the right table for your space.", "/pool-table");
 
 export default function PoolTablesPage() {
   return <PoolTables />;

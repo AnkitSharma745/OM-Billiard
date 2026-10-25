@@ -35,6 +35,14 @@ Theme values live in `tailwind.config.js` and matching CSS properties live in `a
 - Keep touch targets comfortable and keyboard focus visible.
 - Honor `prefers-reduced-motion`.
 
+## Interaction language
+
+- The first screen pairs expressive type with a three-view photo selector. Images are local, responsive assets; the first view is preloaded.
+- Mobile collection sections use touch-friendly horizontal browsing and visible scroll hints.
+- Dark editorial panels use the `inverse` button variant so labels retain contrast in every state.
+- Decorative accents are short rails and lines tied to the cue-sports visual language. Avoid partially cropped outline circles in cards.
+- Keep motion brief and respect reduced-motion preferences.
+
 ## Media and loading
 
 - Use `OptimizedImage` for local imagery to reserve layout space and show a warm shimmer while loading.

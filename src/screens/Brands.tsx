@@ -5,6 +5,8 @@ import Talisman from "../assets/Brands/TalisMan.jpeg";
 import OptimizedImage from "../components/OptimizedImage";
 import PageIntro from "../components/ui/PageIntro";
 import { ButtonLink } from "../components/ui/Button";
+import EditorialImageSection from "../components/EditorialImageSection";
+import BallImage from "../assets/Balls/JBB.jpg";
 
 const brands = [
   { name: "Aramith", description: "Billiard balls", detail: "Discover Aramith balls listed in the current catalog.", logo: Aramith, number: "01" },
@@ -31,9 +33,11 @@ export default function Brands() {
         </div>
       </section>
 
-      <section className="bg-editorial-dark px-gutter py-14 text-editorial-text sm:py-20" aria-labelledby="brand-collection-title">
+      <EditorialImageSection eyebrow="From brand to game" title="See where the equipment comes together." description="Explore the ball sets and cue equipment in our catalog. If a brand or specification matters to you, ask us about the current selection." image={BallImage} alt="Billiard ball set from the current catalog" href="/billiard-balls" action="Explore ball sets" />
+
+      <section className="bg-editorial-dark py-14 text-editorial-text sm:py-20" aria-labelledby="brand-collection-title">
         <div className="page-shell grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-          <div><p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">Find your next favourite</p><h2 id="brand-collection-title" className="mt-3 font-display text-heading-lg font-semibold">The right gear makes every frame feel better.</h2><p className="mt-4 max-w-lg text-sm leading-6 text-editorial-muted">From billiard balls to cue tips, ask our team about products from the brands shown here and what is currently available.</p><ButtonLink href="/products" variant="secondary" className="mt-7 border-editorial-muted/40 bg-transparent text-editorial-text hover:bg-editorial-mid">Explore equipment <ArrowRightIcon className="h-4 w-4" /></ButtonLink></div>
+          <div><p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">Find your next favourite</p><h2 id="brand-collection-title" className="mt-3 font-display text-heading-lg font-semibold">The right gear makes every frame feel better.</h2><p className="mt-4 max-w-lg text-sm leading-6 text-editorial-muted">From billiard balls to cue tips, ask our team about products from the brands shown here and what is currently available.</p><ButtonLink href="/products" variant="inverse" className="mt-7">Explore equipment <ArrowRightIcon className="h-4 w-4" /></ButtonLink></div>
           <div className="grid grid-cols-3 gap-3 sm:gap-5">{brands.map((brand) => <div key={brand.name} className="grid min-h-24 place-items-center rounded-lg border border-editorial-muted/20 bg-editorial-mid/50 p-3 sm:min-h-36 sm:p-5"><OptimizedImage src={brand.logo} alt={`${brand.name} logo`} className="max-h-16 w-auto max-w-full object-contain sm:max-h-24" sizes="(max-width: 640px) 30vw, 18vw" /></div>)}</div>
         </div>
       </section>

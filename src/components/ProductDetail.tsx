@@ -10,6 +10,7 @@ import type { ProductDetails } from "../lib/types";
 import OrderNowModal from "./OrderFormModal";
 import { ButtonLink } from "./ui/Button";
 import { formatPrice, getSavings } from "../lib/price";
+import ProductCard from "./ProductCard";
 
 function decodeSegment(value: string) {
   try {
@@ -39,6 +40,7 @@ export default function ProductDetail() {
   const [details, setDetails] = useState<ProductDetails | null>(routeDetails);
   const [selectedSize, setSelectedSize] = useState(routeDetails?.size[0] ?? "");
   const specificationItems = details?.information?.filter((info) => !/^\s*(size|room size)\s*-/i.test(info)) ?? [];
+  const relatedTables = PoolTableData.filter((item) => item.name !== details?.title).slice(0, 3);
 
   useEffect(() => {
     AOS.init({ duration: 500, once: true });
@@ -126,6 +128,16 @@ export default function ProductDetail() {
           </ul>
         </section>
       )}
+
+      <section className="mt-8 grid gap-5 rounded-xl bg-editorial-dark p-6 text-editorial-text sm:mt-10 sm:p-9 md:grid-cols-[1fr_auto] md:items-center" aria-labelledby="detail-service-heading">
+        <div><p className="text-xs font-semibold uppercase tracking-[0.15em] text-gold">Make it yours</p><h2 id="detail-service-heading" className="mt-3 font-display text-heading-md font-semibold">A table is part of the room.</h2><p className="mt-3 max-w-xl text-sm leading-6 text-editorial-muted">Ask us about installation, maintenance or other available sizes for this model.</p></div>
+        <ButtonLink href="/services" variant="inverse">Explore table services</ButtonLink>
+      </section>
+
+      <section className="mt-12 sm:mt-16" aria-labelledby="related-heading">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-[0.15em] text-gold-dark">Keep exploring</p><h2 id="related-heading" className="mt-2 font-display text-heading-md font-semibold text-ink">More tables to consider.</h2></div><ButtonLink href="/pool-table" variant="secondary" size="sm">See the collection</ButtonLink></div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{relatedTables.map((table) => <ProductCard key={table.id} name={table.name} image={table.img} alt={table.name} price={table.details.price.current} originalPrice={table.details.price.original} size={table.details.size.join(" · ")} href={`/pool-table/${table.id}`} imageRatio="3/2" />)}</div>
+      </section>
     </div>
   );
 }

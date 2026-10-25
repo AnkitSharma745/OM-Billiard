@@ -5,6 +5,8 @@ import Custom from "../assets/Services/pool-table-repair-service-1000x1000.webp"
 import OptimizedImage from "../components/OptimizedImage";
 import PageIntro from "../components/ui/PageIntro";
 import { ButtonLink } from "../components/ui/Button";
+import EditorialImageSection from "../components/EditorialImageSection";
+import TableImage from "../assets/Products/AmericanPoolTable1.jpg";
 
 const services = [
   { id: "installation", number: "01", title: "Installation & setup", detail: "Our team handles pool and foosball table assembly and leveling, with attention to the placement and setup of your table.", image: Instalation, note: "From assembly to a level playing surface" },
@@ -42,13 +44,15 @@ export default function Services() {
         </div>
       </section>
 
-      <section className="bg-editorial-dark px-gutter py-14 text-editorial-text sm:py-20" aria-labelledby="service-journey-title">
+      <EditorialImageSection eyebrow="A complete table conversation" title="The table, the room and the way you play." description="Whether you are selecting a table, arranging installation or asking about maintenance, tell us how you plan to use the space. We can discuss the available products and services together." image={TableImage} alt="Pool table with billiard balls and cues" href="/pool-table" action="Explore tables" />
+
+      <section className="bg-editorial-dark py-14 text-editorial-text sm:py-20" aria-labelledby="service-journey-title">
         <div className="page-shell">
           <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">The way forward</p><h2 id="service-journey-title" className="mt-3 font-display text-heading-lg font-semibold">From first thought to first break.</h2></div><p className="max-w-md text-sm leading-6 text-editorial-muted">Every room and table is different. Start with a conversation about what you need.</p></div>
           <div className="mt-10 grid gap-4 md:grid-cols-3">
             {checkpoints.map((point, index) => <article key={point.n} className="relative rounded-lg border border-editorial-muted/20 bg-editorial-mid/35 p-6 transition-colors hover:bg-editorial-mid/60 sm:p-7"><div className="flex items-center justify-between"><span className="font-display text-3xl font-semibold text-gold">{point.n}</span>{index < checkpoints.length - 1 && <ArrowDownIcon className="h-4 w-4 text-editorial-muted md:hidden" aria-hidden="true" />}</div><h3 className="mt-6 font-display text-lg font-semibold">{point.title}</h3><p className="mt-2 text-sm leading-6 text-editorial-muted">{point.text}</p></article>)}
           </div>
-          <div className="mt-8 flex flex-col gap-4 rounded-lg border border-editorial-muted/20 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7"><div><p className="font-display text-lg font-semibold">Looking for a refurbished table?</p><p className="mt-1 text-sm text-editorial-muted">Ask our team about current availability and condition.</p></div><ButtonLink href="/#contact" variant="secondary" className="border-editorial-muted/40 bg-transparent text-editorial-text hover:bg-editorial-mid">Ask about availability <ArrowRightIcon className="h-4 w-4" /></ButtonLink></div>
+          <div className="mt-8 flex flex-col gap-4 rounded-lg border border-editorial-muted/20 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-7"><div><p className="font-display text-lg font-semibold">Looking for a refurbished table?</p><p className="mt-1 text-sm text-editorial-muted">Ask our team about current availability and condition.</p></div><ButtonLink href="/#contact" variant="inverse">Ask about availability <ArrowRightIcon className="h-4 w-4" /></ButtonLink></div>
         </div>
       </section>
 

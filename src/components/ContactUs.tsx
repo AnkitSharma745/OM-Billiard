@@ -37,12 +37,11 @@ export default function ContactUs() {
   };
 
   return (
-    <section id="contact" className="scroll-mt-24 px-gutter pb-section" aria-labelledby="contact-title">
+    <section id="contact" className="scroll-mt-24 pb-section" aria-labelledby="contact-title">
       <div className="page-shell overflow-hidden rounded-xl border border-line bg-surface shadow-card">
         <div className="grid lg:grid-cols-[0.92fr_1.08fr]">
           <div className="relative isolate overflow-hidden bg-editorial-dark p-6 text-editorial-text sm:p-9 lg:p-12">
-            <div className="absolute -right-16 -top-16 -z-10 h-64 w-64 rounded-full border border-editorial-muted/15" aria-hidden="true" />
-            <div className="absolute -right-7 -top-7 -z-10 h-44 w-44 rounded-full border border-editorial-muted/15" aria-hidden="true" />
+            <div className="absolute right-0 top-0 -z-10 h-full w-1/2 bg-gradient-to-bl from-gold/10 to-transparent" aria-hidden="true" />
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">The next step starts here</p>
             <h2 id="contact-title" className="mt-4 max-w-lg font-display text-heading-xl font-semibold">Let’s talk tables.</h2>
             <p className="mt-5 max-w-md text-base leading-7 text-editorial-muted">Tell us what you’re planning. We can talk products, table setup, installation, maintenance and care.</p>

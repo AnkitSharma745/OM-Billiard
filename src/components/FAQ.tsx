@@ -13,7 +13,7 @@ const faqs = [
 
 export default function FAQ() {
   return (
-    <section className="section-space bg-bg px-gutter" aria-labelledby="faq-title">
+    <section className="section-space bg-bg" aria-labelledby="faq-title">
       <div className="page-shell grid gap-9 lg:grid-cols-[0.7fr_1.3fr]">
         <div className="lg:sticky lg:top-32 lg:self-start">
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-dark">Before you make your shot</p>

@@ -1,10 +1,7 @@
-import type { Metadata } from "next";
 import BilliardBalls from "@/src/screens/BilliardBalls";
+import { pageMetadata } from "@/src/lib/site";
 
-export const metadata: Metadata = {
-  title: "Billiard balls | OM Billiard",
-  description: "Browse billiard ball sets in the OM Billiard catalog.",
-};
+export const metadata = pageMetadata("Billiard Balls & Sets", "Browse billiard ball sets in the OM Billiard catalog.", "/billiard-balls");
 
 export default function BilliardBallsPage() {
   return <BilliardBalls />;
