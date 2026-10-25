@@ -1,0 +1,50 @@
+@import "aos/dist/aos.css";
+@import "react-image-gallery/styles/css/image-gallery.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+}
+
+.slide {
+  perspective: 1000px;
+}
+
+.slick-dots li button:before {
+  color: white;
+}
+
+.slick-prev,
+.slick-next {
+  z-index: 50;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.slick-prev:hover,
+.slick-next:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+/* Image Hover Effect */
+.slick-slide img {
+  filter: brightness(85%);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.slick-slide img:hover {
+  filter: brightness(100%);
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+
