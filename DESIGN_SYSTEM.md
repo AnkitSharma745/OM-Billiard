@@ -2,40 +2,46 @@
 
 ## Visual direction
 
-Use a premium billiards-club feel: confident and calm, with craft details from the game rather than a generic sports-store look. Keep layouts spacious, product photography prominent, controls clear, and motion restrained.
+An editorial billiards-club experience: warm, composed, tactile, and product-led. Use generous whitespace, strong product photography, clear actions, restrained motion, and accessible contrast. Avoid generic sports-store styling and unsupported business claims.
 
-## Palette
+## Theme tokens
 
 | Token | Hex | Use |
 | --- | --- | --- |
-| `ink` | `#102033` | Main text, dark surfaces, strong contrast |
-| `ink-soft` | `#24374A` | Secondary headings and dark supporting surfaces |
-| `ink-muted` | `#667789` | Supporting text and metadata |
-| `felt` | `#126B5B` | Primary actions and selected states |
-| `felt-dark` | `#0C5147` | Hover and pressed action states |
-| `felt-light` | `#E4F1ED` | Soft selected and informational surfaces |
-| `brass` | `#B88A45` | Small premium accents, badges, and focus rings |
-| `brass-light` | `#F2E8D7` | Warm accent backgrounds |
-| `canvas` | `#F6F7F5` | Main page background |
-| `surface` | `#FFFFFF` | Cards and content surfaces |
-| `line` | `#E1E6E8` | Dividers and subtle borders |
+| `bg` | `#F2EDE5` | Warm canvas |
+| `surface` | `#FFFCF7` | Cards and raised content |
+| `surface-2` | `#E9E0D4` | Soft secondary surfaces |
+| `sand` | `#C4A786` | Natural accent |
+| `gold` | `#CB913C` | Small premium accents |
+| `gold-dark` | `#986328` | Accessible gold actions/focus |
+| `sage` | `#A4AE96` | Quiet secondary accents |
+| `sage-dark` | `#66775B` | Accessible sage actions |
+| `ink` | `#252320` | Main text |
+| `muted` | `#776C60` | Supporting text |
+| `line` | `#E5DCCF` | Dividers and borders |
+| `error` | `#B85C4A` | Error state |
+| `editorial-dark` | `#2D2923` | Dark editorial panels |
+| `editorial-mid` | `#514332` | Dark panel midtone |
+| `editorial-warm` | `#86653D` | Warm panel accent |
+| `editorial-text` | `#FFF8EE` | Text on dark panels |
+| `editorial-muted` | `#E1D2BC` | Secondary text on dark panels |
 
-Use the semantic Tailwind names in `tailwind.config.js`; avoid adding one-off hex values to page components.
+Theme values live in `tailwind.config.js` and matching CSS properties live in `app/globals.css`. Use semantic theme classes rather than one-off colors.
 
-## Type and layout
+## Typography and layout
 
-- **Manrope Variable** for headings and display text.
-- **DM Sans Variable** for body text, labels, and controls.
-- Use the fluid `text-fluid-*` and `spacing.gutter` / `spacing.section` tokens for responsive sizing.
-- Use `.page-shell` for consistent responsive page width and gutters.
-- Keep interactive targets comfortable on touch screens and preserve visible keyboard focus.
-- Respect `prefers-reduced-motion` for all animation and transitions.
+- Manrope is used for display and headings; DM Sans is used for body text and controls.
+- Use the fluid heading scale, `px-gutter`, `py-section`, and `.page-shell` for responsive composition.
+- Keep touch targets comfortable and keyboard focus visible.
+- Honor `prefers-reduced-motion`.
 
 ## Media and loading
 
-- Use `OptimizedImage` for page imagery. It uses Next.js image optimization, responsive `sizes`, blur placeholders for imported images, and a shimmer while assets load.
-- The App Router `app/loading.tsx` supplies the shared route transition skeleton. Reuse the `Skeleton` component for page-specific loading states.
-- Keep curated, versioned product and brand images in `src/assets`.
-- Put frequently updated large images and video in **Supabase Storage**, and keep only their path, alt text, and display metadata in the database. Do not store binary media in database rows.
-- Set `NEXT_PUBLIC_SUPABASE_URL` when remote Storage media is introduced. `next.config.ts` then allows optimized images only from that project's public Storage paths.
-- Videos should use a poster image and `preload="none"` so opening a page does not fetch full video files before playback.
+- Use `OptimizedImage` for local imagery to reserve layout space and show a warm shimmer while loading.
+- The App Router `app/loading.tsx` provides a shared route skeleton. Reuse `Skeleton` for local loading states.
+- Curated product and brand images remain in `src/assets`. Supabase Storage is a future option for frequently updated large media; no Supabase integration or asset database currently exists.
+- Videos should use a poster and `preload="none"` if added later.
+
+## Honest commerce behavior
+
+Product actions send an inquiry through the existing EmailJS integration. There is no cart, checkout, inventory, or order management backend. Account forms are prototypes and do not authenticate or persist user data.

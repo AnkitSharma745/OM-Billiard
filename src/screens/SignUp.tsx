@@ -1,86 +1,71 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import { Link, useNavigate } from '../lib/navigation';
+"use client";
 
-const SignUp = () => {
-  const navigate = useNavigate();
+import { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Link } from "../lib/navigation";
+import { Button } from "../components/ui/Button";
 
-  const signUpSchema = Yup.object().shape({
-    username: Yup.string().required('Username is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    password: Yup.string().min(6, 'Password should be at least 6 characters').required('Password is required'),
-  });
+const signUpSchema = Yup.object({
+  username: Yup.string().required("Name is required"),
+  email: Yup.string().email("Enter a valid email address").required("Email is required"),
+  password: Yup.string().min(6, "Use at least 6 characters").required("Password is required"),
+});
 
-  const handleSubmit = (values: { username: string; email: string; password: string }) => {
-    // Simulate sign-up logic
-    console.log('Sign-up values:', values);
-    // After sign-up, navigate to home page
-    navigate('/home');
-  };
+export default function SignUp() {
+  const [status, setStatus] = useState("");
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-blue-600 to-indigo-900">
-      <div className="w-full max-w-lg bg-white rounded-lg shadow-lg p-8">
-        <h1 className="text-3xl font-bold mb-6 text-center">Sign Up</h1>
-        <Formik
-          initialValues={{ username: '', email: '', password: '' }}
-          validationSchema={signUpSchema}
-          onSubmit={handleSubmit}
-        >
-          {() => (
-            <Form>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Username</label>
-                <Field
-                  name="username"
-                  type="text"
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                  placeholder="Enter your username"
-                />
-                <ErrorMessage name="username" component="div" className="text-red-600 text-sm mt-1" />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                <Field
-                  name="email"
-                  type="email"
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                  placeholder="Enter your email"
-                />
-                <ErrorMessage name="email" component="div" className="text-red-600 text-sm mt-1" />
-              </div>
-              <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2">Password</label>
-                <Field
-                  name="password"
-                  type="password"
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300"
-                  placeholder="Enter your password"
-                />
-                <ErrorMessage name="password" component="div" className="text-red-600 text-sm mt-1" />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-600 transition duration-300"
-              >
-                Sign Up
-              </button>
-            </Form>
-          )}
-        </Formik>
-        <div className="mt-4 text-center">
-          <p>
-            Already have an account?{' '}
-            <Link to="/login" className="text-blue-500 hover:underline">
-              Login here
-            </Link>
+    <section className="page-shell section-space">
+      <div className="mx-auto grid max-w-5xl overflow-hidden rounded-xl border border-line bg-surface shadow-soft md:grid-cols-[0.9fr_1.1fr]">
+        <div className="editorial-panel flex flex-col justify-between p-7 sm:p-10 lg:p-12">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-editorial-muted">OM Billiard</p>
+          <div className="my-10">
+            <p className="mb-4 text-sm font-medium text-gold">A note about accounts</p>
+            <h1 className="font-display text-heading-lg font-semibold">A place for your next game.</h1>
+            <p className="mt-4 max-w-sm text-sm leading-6 text-editorial-muted">Online account creation is not connected yet. Please contact our team for product questions.</p>
+          </div>
+          <a href="mailto:askombilliard@gmail.com" className="text-sm font-medium text-editorial-text underline decoration-editorial-warm underline-offset-4 hover:text-gold">Contact OM Billiard</a>
+        </div>
+
+        <div className="p-6 sm:p-10 lg:p-12">
+          <h2 className="font-display text-heading-md font-semibold text-ink">Create an account</h2>
+          <p className="mt-2 text-sm leading-6 text-muted">Account registration is not available yet.</p>
+          <Formik
+            initialValues={{ username: "", email: "", password: "" }}
+            validationSchema={signUpSchema}
+            onSubmit={async (_values, helpers) => {
+              setStatus("Account creation is not connected. Your details have not been sent or saved.");
+              helpers.setSubmitting(false);
+            }}
+          >
+            {({ isSubmitting }) => (
+              <Form className="mt-7 space-y-5">
+                <div>
+                  <label htmlFor="signup-name" className="mb-1.5 block text-sm font-medium text-ink">Name</label>
+                  <Field id="signup-name" name="username" type="text" autoComplete="name" className="form-control" placeholder="Your name" />
+                  <ErrorMessage name="username" component="p" className="status-error mt-1.5 text-sm" />
+                </div>
+                <div>
+                  <label htmlFor="signup-email" className="mb-1.5 block text-sm font-medium text-ink">Email</label>
+                  <Field id="signup-email" name="email" type="email" autoComplete="email" className="form-control" placeholder="you@example.com" />
+                  <ErrorMessage name="email" component="p" className="status-error mt-1.5 text-sm" />
+                </div>
+                <div>
+                  <label htmlFor="signup-password" className="mb-1.5 block text-sm font-medium text-ink">Password</label>
+                  <Field id="signup-password" name="password" type="password" autoComplete="new-password" className="form-control" placeholder="At least 6 characters" />
+                  <ErrorMessage name="password" component="p" className="status-error mt-1.5 text-sm" />
+                </div>
+                <Button type="submit" disabled={isSubmitting} className="w-full">Create account</Button>
+                {status && <p role="status" aria-live="polite" className="status-neutral rounded-lg p-3 text-sm">{status}</p>}
+              </Form>
+            )}
+          </Formik>
+          <p className="mt-6 border-t border-line pt-5 text-sm text-muted">
+            Already have an account? <Link to="/login" className="font-semibold text-gold-dark underline underline-offset-4">Sign in</Link>
           </p>
         </div>
       </div>
-    </div>
+    </section>
   );
-};
-
-export default SignUp;
-
-
+}

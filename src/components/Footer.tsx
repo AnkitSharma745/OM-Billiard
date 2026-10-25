@@ -1,125 +1,65 @@
 import { FaFacebook, FaInstagram } from "react-icons/fa";
-import AOS from "aos";
-import { useEffect } from "react";
+import { Link } from "../lib/navigation";
 
+const year = new Date().getFullYear();
 
-function Footer() {
-  useEffect(() => { AOS.init({ duration: 400 }); }, []);
+const footerLinks = [
+  { label: "Products", href: "/products" },
+  { label: "Pool tables", href: "/pool-table" },
+  { label: "Billiard balls", href: "/billiard-balls" },
+  { label: "Cue sticks", href: "/billiard-cue" },
+  { label: "Services", href: "/services" },
+  { label: "Brands", href: "/brands" },
+];
 
+export default function Footer() {
   return (
-    <footer className="bg-gray-800 text-white py-10">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-between items-center">
-          {/* Brand Logo and Description */}
-          <div className="w-full lg:w-1/3 mb-6 lg:mb-0" data-aos="fade-up">
-            <h2 className="text-2xl font-bold">OM Billiard</h2>
-            <p className="mt-2 text-gray-400">
-              Quality that fits your style. Crafting comfort and elegance for
-              your play.
-            </p>
-          </div>
-          {/* Navigation Links */}
-          <div
-            className="w-full lg:w-1/3 mb-6 lg:mb-0"
-            data-aos="fade-up"
-            data-aos-delay="200"
-          >
-            <h3 className="text-xl font-semibold">Quick Links</h3>
-            <ul className="mt-2 space-y-2 text-gray-400">
-              <li>
-                <a
-                  href="/"
-                  className="hover:text-white transition-colors duration-300"
-                >
-                  About Us
-                </a>
+    <footer className="bg-editorial-dark text-editorial-text">
+      <div className="page-shell grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_0.8fr] lg:gap-12 lg:py-16">
+        <div>
+          <Link to="/" className="font-display text-2xl font-semibold tracking-tight text-editorial-text">OM Billiard</Link>
+          <p className="mt-4 max-w-sm text-sm leading-6 text-editorial-muted">
+            Tables, cues and support for the game room you have in mind.
+          </p>
+        </div>
+
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-editorial-muted">Explore</h2>
+          <ul className="mt-4 space-y-2.5">
+            {footerLinks.map((item) => (
+              <li key={item.href}>
+                <Link to={item.href} className="text-sm text-editorial-text/85 transition-colors hover:text-gold">{item.label}</Link>
               </li>
-              <li>
-                <a
-                  href="/services"
-                  className="hover:text-white transition-colors duration-300"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/products"
-                  className="hover:text-white transition-colors duration-300"
-                >
-                  Products
-                </a>
-              </li>
-              <li>
-                {/* <a
-                  id="#contact"
-                  className="hover:text-white transition-colors duration-300"
-                >
-                  Contact Us
-                </a> */}
-              </li>
-            </ul>
-          </div>
-          {/* Social Media Links */}
-          <div
-            className="w-full lg:w-1/3 mb-6 lg:mb-0"
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
-            <h3 className="text-xl font-semibold">Follow Us</h3>
-            <div className="flex space-x-4 mt-2">
-              <a
-                href="https://www.facebook.com/Ombilliardofficial?rdid=O8QRoFt0GJubO15Q&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fx1KLXTqn7qVtUccS%2F"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-transform duration-300 transform hover:scale-125"
-              >
-                <FaFacebook size={24} />
-              </a>
-              {/* <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-transform duration-300 transform hover:scale-125"
-              >
-                <FaTwitter size={24} />
-              </a> */}
-              <a
-                href="https://www.instagram.com/ombilliardofficial/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-transform duration-300 transform hover:scale-125"
-              >
-                <FaInstagram size={24} />
-              </a>
-              {/* <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-400 hover:text-white transition-transform duration-300 transform hover:scale-125"
-              >
-                <FaLinkedin size={24} />
-              </a> */}
-            </div>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-editorial-muted">Contact</h2>
+          <address className="mt-4 space-y-3 text-sm not-italic leading-6 text-editorial-text/85">
+            <a href="tel:+919810508355" className="block hover:text-gold">+91 98105 08355</a>
+            <a href="mailto:askombilliard@gmail.com" className="block break-all hover:text-gold">askombilliard@gmail.com</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Gali+No.+2%2C+Fng+Vihar+2%2C+near+Garhi%2C+Chokhandi%2C+Sector+121%2C+Noida%2C+Uttar+Pradesh+201309" target="_blank" rel="noreferrer" className="block hover:text-gold">
+              Sector 121, Noida, Uttar Pradesh 201309
+            </a>
+            <p className="text-editorial-muted">Mon–Sat, 9 am–7 pm</p>
+          </address>
+        </div>
+
+        <div>
+          <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-editorial-muted">Follow</h2>
+          <div className="mt-4 flex gap-3">
+            <a href="https://www.facebook.com/Ombilliardofficial?rdid=O8QRoFt0GJubO15Q&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fx1KLXTqn7qVtUccS%2F" target="_blank" rel="noreferrer" aria-label="OM Billiard on Facebook" className="grid h-11 w-11 place-items-center rounded-full border border-editorial-muted/30 text-editorial-text transition-colors hover:border-gold hover:text-gold"><FaFacebook aria-hidden="true" /></a>
+            <a href="https://www.instagram.com/ombilliardofficial/" target="_blank" rel="noreferrer" aria-label="OM Billiard on Instagram" className="grid h-11 w-11 place-items-center rounded-full border border-editorial-muted/30 text-editorial-text transition-colors hover:border-gold hover:text-gold"><FaInstagram aria-hidden="true" /></a>
           </div>
         </div>
-        <div className="mt-8 border-t border-gray-700 pt-4 text-gray-400 text-center">
-          &copy; 2024 OM Billiards. All rights reserved.
-        </div>
-        <div className=" text-gray-400 text-center h-1">
-          Developed & Maintained by
-          <a
-            style={{ color: "#BCB8B1", marginLeft: "5px" }}
-            href="https://ankitsharma745.github.io"
-            target="_blank"
-          >
-            Ankit Sharma
-          </a>
+      </div>
+      <div className="border-t border-editorial-muted/15">
+        <div className="page-shell flex flex-col gap-2 py-4 text-xs text-editorial-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>© {year} OM Billiard. All rights reserved.</p>
+          <p>Pool, snooker and cue sports equipment.</p>
         </div>
       </div>
     </footer>
   );
 }
-
-export default Footer;
-

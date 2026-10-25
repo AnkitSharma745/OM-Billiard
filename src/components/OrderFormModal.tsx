@@ -1,260 +1,136 @@
-import { useState } from "react";
-import type { ChangeEvent, FormEvent, MouseEvent } from "react";
-import ReactDOM from "react-dom"; // For React Portals
-import { Switch } from "@headlessui/react"; // For the agreement toggle
- // For animations (optional)
+"use client";
+
+import { useId, useState } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle, Switch } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { sendEmails } from "../email";
+import { Button } from "./ui/Button";
 
-
-const OrderNowModal = () => {
-  // Form state and modal state
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-  });
-  const [agreed, setAgreed] = useState(false);
-  const [statusMessage, setStatusMessage] = useState("");
-  const [isOpen, setIsOpen] = useState(false); // Modal visibility
-  const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false); // Thank you modal
-
-  // Input change handler
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // Form submit handler
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setStatusMessage("Sending...");
-
-    const result = await sendEmails(formData); // Function to send the email
-
-    if (result.success) {
-      setStatusMessage("Order placed successfully!");
-      setTimeout(() => {
-        setIsOpen(false); // Close the form modal
-        setIsThankYouModalOpen(true); // Open Thank You modal
-      }, 1000); // Delay for better UX
-    } else {
-      setStatusMessage("Failed to place the order. Please try again.");
-    }
-  };
-
-  // Open/close modal functions
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
-
-  // Close modal if user clicks outside modal content
-  const handleOverlayClick = (e: MouseEvent<HTMLDivElement>) => {
-    if (e.target instanceof HTMLElement && e.target.classList.contains("modal-overlay")) {
-      closeModal();
-    }
-  };
-
-  const closeThankYouModal = () => setIsThankYouModalOpen(false);
-
-  // Modal content
-  const modalContent = (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 modal-overlay"
-      onClick={handleOverlayClick}
-    >
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl w-full">
-        <h2 className="text-2xl font-semibold mb-4">Place Your Order</h2>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* First Name */}
-          <div data-aos="fade-up">
-            <label
-              htmlFor="first-name"
-              className="block text-lg font-semibold text-gray-900"
-            >
-              First Name
-            </label>
-            <input
-              id="first-name"
-              name="firstName"
-              type="text"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="block w-full rounded-md border px-3.5 py-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-              required
-            />
-          </div>
-
-          {/* Last Name */}
-          <div data-aos="fade-up">
-            <label
-              htmlFor="last-name"
-              className="block text-lg font-semibold text-gray-900"
-            >
-              Last Name
-            </label>
-            <input
-              id="last-name"
-              name="lastName"
-              type="text"
-              value={formData.lastName}
-              onChange={handleChange}
-              className="block w-full rounded-md border px-3.5 py-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-              required
-            />
-          </div>
-
-          {/* Email */}
-          <div data-aos="fade-up">
-            <label
-              htmlFor="email"
-              className="block text-lg font-semibold text-gray-900"
-            >
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="block w-full rounded-md border px-3.5 py-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-              required
-            />
-          </div>
-
-          {/* Phone */}
-          <div data-aos="fade-up">
-            <label
-              htmlFor="phone"
-              className="block text-lg font-semibold text-gray-900"
-            >
-              Phone
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={handleChange}
-              className="block w-full rounded-md border px-3.5 py-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-              required
-            />
-          </div>
-
-          {/* Address */}
-          <div data-aos="fade-up">
-            <label
-              htmlFor="address"
-              className="block text-lg font-semibold text-gray-900"
-            >
-              Address
-            </label>
-            <input
-              id="address"
-              name="address"
-              type="text"
-              value={formData.address}
-              onChange={handleChange}
-              className="block w-full rounded-md border px-3.5 py-2 text-gray-900 shadow-sm focus:ring-2 focus:ring-indigo-600 sm:text-sm"
-              required
-            />
-          </div>
-
-          {/* Agreement Switch */}
-          <div className="mt-6 flex items-center gap-x-4">
-            <Switch
-              checked={agreed}
-              onChange={setAgreed}
-              className={`${
-                agreed ? "bg-indigo-600" : "bg-gray-200"
-              } relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out`}
-            >
-              <span
-                className={`${
-                  agreed ? "translate-x-6" : "translate-x-1"
-                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-200 ease-in-out`}
-              />
-            </Switch>
-            <span className="text-sm leading-6 text-gray-600">
-              I agree to the{" "}
-              <a href="#" className="font-semibold text-indigo-600">
-                terms and conditions
-              </a>
-              .
-            </span>
-          </div>
-
-          {/* Submit Button */}
-          <div className="mt-6">
-            <button
-              type="submit"
-              disabled={!agreed}
-              className="w-full flex justify-center rounded-md bg-indigo-600 py-2 px-4 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600 disabled:bg-gray-300"
-            >
-              Submit Order
-            </button>
-          </div>
-
-          {/* Status Message */}
-          <div className="mt-4 text-center text-sm text-gray-500">
-            {statusMessage && <p>{statusMessage}</p>}
-          </div>
-        </form>
-
-        {/* Close Modal Button */}
-        <button
-          onClick={closeModal}
-          className="mt-4 text-sm text-gray-500 hover:underline"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  );
-
-  // Thank You Modal
-  const thankYouModalContent = (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75 modal-overlay"
-      onClick={handleOverlayClick}
-    >
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-xl w-full">
-        <h2 className="text-2xl font-semibold mb-4">Thank You!</h2>
-        <p>Your order has been placed successfully.</p>
-        <button
-          onClick={closeThankYouModal}
-          className="mt-6 w-full flex justify-center rounded-md bg-indigo-600 py-2 px-4 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 focus:ring-2 focus:ring-indigo-600"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="relative">
-      {/* Button to open modal */}
-      <button
-        onClick={openModal}
-        className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-2 rounded-full shadow-md hover:shadow-lg transform hover:scale-105 transition-transform duration-300"
-      >
-        Order Now
-      </button>
-
-      {/* Render the modal using React Portal */}
-      {isOpen && ReactDOM.createPortal(modalContent, document.body)}
-
-      {/* Render Thank You modal */}
-      {isThankYouModalOpen &&
-        ReactDOM.createPortal(thankYouModalContent, document.body)}
-    </div>
-  );
+type InquiryForm = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
 };
 
-export default OrderNowModal;
+const emptyForm: InquiryForm = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  address: "",
+};
 
+const fields = [
+  { name: "firstName", label: "First name", type: "text", autoComplete: "given-name" },
+  { name: "lastName", label: "Last name", type: "text", autoComplete: "family-name" },
+  { name: "email", label: "Email", type: "email", autoComplete: "email" },
+  { name: "phone", label: "Phone", type: "tel", autoComplete: "tel" },
+  { name: "address", label: "City or delivery address", type: "text", autoComplete: "street-address" },
+] as const;
 
+export default function OrderNowModal({ triggerLabel = "Request product details", productName }: { triggerLabel?: string; productName?: string }) {
+  const id = useId();
+  const [formData, setFormData] = useState<InquiryForm>(emptyForm);
+  const [agreed, setAgreed] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isThankYouModalOpen, setIsThankYouModalOpen] = useState(false);
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatusMessage("Sending your inquiry…");
+    const inquiryContext = [productName && `Product: ${productName}`, formData.address && `Location: ${formData.address}`].filter(Boolean).join("\n");
+    const result = await sendEmails({ ...formData, message: inquiryContext || undefined });
+
+    if (result.success) {
+      setFormData(emptyForm);
+      setStatusMessage("");
+      setIsOpen(false);
+      setIsThankYouModalOpen(true);
+      return;
+    }
+
+    setStatusMessage(result.message);
+  };
+
+  return (
+    <>
+      <Button variant="secondary" size="sm" onClick={() => setIsOpen(true)}>{triggerLabel}</Button>
+
+      <Dialog open={isOpen} onClose={setIsOpen} className="relative z-overlay">
+        <DialogBackdrop transition className="fixed inset-0 bg-overlay backdrop-blur-sm duration-normal data-[closed]:opacity-0" />
+        <div className="fixed inset-0 z-overlay w-screen overflow-y-auto p-3 sm:p-6">
+          <div className="flex min-h-full items-center justify-center">
+            <DialogPanel transition className="relative max-h-[calc(100dvh-1.5rem)] w-full max-w-xl overflow-y-auto rounded-xl border border-line bg-surface p-5 shadow-overlay duration-normal data-[closed]:translate-y-3 data-[closed]:opacity-0 sm:max-h-[calc(100dvh-3rem)] sm:p-8">
+              <button type="button" onClick={() => setIsOpen(false)} aria-label="Close inquiry form" className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full text-muted transition-colors hover:bg-surface-2 hover:text-ink">
+                <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+              </button>
+              <DialogTitle className="pr-12 font-display text-heading-md font-semibold text-ink">{productName ? `Ask us about ${productName}` : "Ask us about this product"}</DialogTitle>
+              <p className="mt-2 max-w-lg text-sm leading-6 text-muted">Share your contact details and our team can follow up with product information.</p>
+
+              <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {fields.map((field) => {
+                    const fieldId = `${id}-${field.name}`;
+                    return (
+                      <div key={field.name} className={field.name === "address" ? "sm:col-span-2" : ""}>
+                        <label htmlFor={fieldId} className="mb-1.5 block text-sm font-medium text-ink">{field.label}</label>
+                        <input
+                          id={fieldId}
+                          name={field.name}
+                          type={field.type}
+                          autoComplete={field.autoComplete}
+                          value={formData[field.name]}
+                          onChange={handleChange}
+                          className="form-control"
+                          required
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="flex items-start gap-3 rounded-lg bg-bg p-4">
+                  <Switch
+                    checked={agreed}
+                    onChange={setAgreed}
+                    aria-label="I agree to be contacted about this inquiry"
+                    className={`relative mt-0.5 inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors duration-fast ${agreed ? "bg-sage-dark" : "bg-sand"}`}
+                  >
+                    <span className={`inline-block h-4 w-4 rounded-full bg-surface transition-transform duration-fast ${agreed ? "translate-x-6" : "translate-x-1"}`} />
+                  </Switch>
+                  <p className="text-sm leading-5 text-muted">I agree to be contacted about this inquiry.</p>
+                </div>
+
+                <Button type="submit" disabled={!agreed} className="w-full">Send inquiry</Button>
+                {statusMessage && <p role="status" aria-live="polite" className="status-error text-sm">{statusMessage}</p>}
+              </form>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
+
+      <Dialog open={isThankYouModalOpen} onClose={setIsThankYouModalOpen} className="relative z-toast">
+        <DialogBackdrop className="fixed inset-0 bg-overlay backdrop-blur-sm" />
+        <div className="fixed inset-0 z-toast w-screen overflow-y-auto p-4">
+          <div className="flex min-h-full items-center justify-center">
+            <DialogPanel className="w-full max-w-md rounded-xl border border-line bg-surface p-7 text-center shadow-overlay sm:p-9">
+              <span className="mx-auto grid h-12 w-12 place-items-center rounded-full bg-sage/40 text-sage-dark" aria-hidden="true">✓</span>
+              <DialogTitle className="mt-4 font-display text-heading-md font-semibold text-ink">Inquiry sent</DialogTitle>
+              <p className="mt-2 text-sm leading-6 text-muted">Thanks for getting in touch. Your message has been sent to the OM Billiard team.</p>
+              <Button className="mt-6 w-full" onClick={() => setIsThankYouModalOpen(false)}>Close</Button>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
+    </>
+  );
+}

@@ -1,116 +1,87 @@
-/* eslint-disable react/prop-types */
+"use client";
+
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { usePathname } from "next/navigation";
 import { Link } from "../lib/navigation";
+import { ButtonLink } from "./ui/Button";
 
 const navigation = [
-  { name: "Products", href: "/products", current: false },
-  { name: "Services", href: "/services", current: false },
-  { name: "Brands", href: "/brands", current: false },
+  { name: "Products", href: "/products" },
+  { name: "Pool tables", href: "/pool-table" },
+  { name: "Billiard balls", href: "/billiard-balls" },
+  { name: "Cues", href: "/billiard-cue" },
+  { name: "Services", href: "/services" },
+  { name: "Brands", href: "/brands" },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+function isCurrent(pathname: string, href: string) {
+  return href === "/products"
+    ? pathname === href || pathname.startsWith(`${href}/`)
+    : pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export default function NavBar() {
+  const pathname = usePathname();
+
   return (
-    <Disclosure
-      as="nav"
-      className="shadow-lg w-[98%] mx-auto mt-2 rounded-3xl bg-white border-2 border-transparent bg-clip-padding hover:border-gradient-to-r from-indigo-400 via-pink-500 to-teal-400 transition duration-500 ease-in-out sticky top-0 z-50"
-    >
+    <Disclosure as="header" className="sticky top-0 z-header border-b border-line bg-surface/95 backdrop-blur">
       {({ open }) => (
         <>
-          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-16 items-center justify-between">
-              {/* Logo at the left corner */}
-              <div className="flex-shrink-0">
-                <h4
-                  className="text-2xl sm:text-3xl font-semibold tracking-widest relative transition-all duration-500 ease-in-out transform hover:scale-105"
-                  style={{
-                    color: "#1A202C", // Dark gray for more contrast
-                    textShadow: "1px 1px 2px rgba(0, 0, 0, 0.15)", // Soft shadow to make the text pop
-                  }}
-                >
-                  OM Billiard
-                </h4>
-              </div>
+          <div className="page-shell flex min-h-16 items-center justify-between gap-5 py-2 lg:min-h-[5.25rem]">
+            <Link to="/" className="group flex shrink-0 items-center gap-3" aria-label="OM Billiard home">
+              <span className="grid h-10 w-10 place-items-center rounded-full border border-sand bg-bg font-display text-base font-bold text-ink transition-colors group-hover:bg-surface-2" aria-hidden="true">OM</span>
+              <span className="font-display text-lg font-semibold tracking-tight text-ink sm:text-xl">OM Billiard</span>
+            </Link>
 
-              {/* Centered links for larger screens */}
-              <div className="hidden sm:flex justify-center flex-1 space-x-6">
-                {navigation.map((item) => (
+            <nav aria-label="Main navigation" className="hidden flex-1 items-center justify-center gap-1 lg:flex">
+              {navigation.map((item) => {
+                const current = isCurrent(pathname, item.href);
+                return (
                   <Link
-                    key={item.name}
+                    key={item.href}
                     to={item.href}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-700 hover:bg-gradient-to-r from-[#117D6A] via-[#117D6A] to-[#072079] hover:text-white transition-all duration-300 ease-in-out",
-                      "rounded-md px-4 py-2 text-base font-semibold"
-                    )}
-                    aria-current={item.current ? "page" : undefined}
+                    aria-current={current ? "page" : undefined}
+                    className={`rounded-full px-3 py-2 text-sm font-medium transition-colors duration-fast ease-standard ${current ? "bg-surface-2 text-ink" : "text-muted hover:bg-bg hover:text-ink"}`}
                   >
                     {item.name}
                   </Link>
-                ))}
-              </div>
+                );
+              })}
+            </nav>
 
-              {/* "Get Started" button for larger screens */}
-              <div className="hidden sm:flex">
-                <Link
-                  to="/products"
-                  className="rounded-full bg-gradient-to-r from-[#117D6A] via-[#117D6A] to-[#072079] text-white px-5 py-2 text-base font-semibold hover:bg-gradient-to-l transition-all duration-300 ease-in-out"
-                  style={{ color: "#ffffff" }} // Keep text white to contrast the gradient
-                >
-                  Get Started
-                </Link>
-              </div>
+            <div className="hidden shrink-0 items-center gap-2 lg:flex">
+              <ButtonLink href="/products" size="sm">Explore products</ButtonLink>
+            </div>
 
-              {/* Mobile menu button (hamburger) for small screens */}
-              <div className="absolute inset-y-0 right-0 flex items-center sm:hidden">
-                <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-                  <span className="sr-only">Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  ) : (
-                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-                  )}
-                </Disclosure.Button>
-              </div>
+            <div className="flex items-center gap-2 lg:hidden">
+              <Disclosure.Button className="grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-ink transition-colors hover:bg-bg" aria-label={open ? "Close navigation menu" : "Open navigation menu"}>
+                {open ? <XMarkIcon className="h-5 w-5" aria-hidden="true" /> : <Bars3Icon className="h-5 w-5" aria-hidden="true" />}
+              </Disclosure.Button>
             </div>
           </div>
 
-          {/* Mobile navigation (shown when menu is open) */}
-          <Disclosure.Panel className="sm:hidden">
-            <div className="space-y-1 px-2 pb-3 pt-2">
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as={Link}
-                  to={item.href}
-                  className={classNames(
-                    item.current
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-700 hover:bg-gradient-to-r from-indigo-300 via-pink-300 to-teal-300 hover:text-white transition-all duration-300 ease-in-out",
-                    "block rounded-md px-3 py-2 text-base font-semibold"
-                  )}
-                  aria-current={item.current ? "page" : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-              <Link
-                to="/product"
-                className="block rounded-full bg-gradient-to-r from-[#117D6A] via-[#117D6A] to-[#072079] text-white px-4 py-2 text-base font-semibold text-center hover:bg-gradient-to-l transition-all duration-300 ease-in-out"
-              >
-                Get Started
-              </Link>
-            </div>
+          <Disclosure.Panel className="border-t border-line bg-surface lg:hidden">
+            <nav aria-label="Mobile navigation" className="page-shell grid gap-1 py-3">
+              {navigation.map((item) => {
+                const current = isCurrent(pathname, item.href);
+                return (
+                  <Disclosure.Button
+                    key={item.href}
+                    as={Link}
+                    to={item.href}
+                    aria-current={current ? "page" : undefined}
+                    className={`min-h-12 rounded-lg px-4 py-3 text-base font-medium ${current ? "bg-surface-2 text-ink" : "text-muted hover:bg-bg hover:text-ink"}`}
+                  >
+                    {item.name}
+                  </Disclosure.Button>
+                );
+              })}
+              <ButtonLink href="/products" size="md" className="mt-2 w-full">Explore products</ButtonLink>
+            </nav>
           </Disclosure.Panel>
         </>
       )}
     </Disclosure>
   );
 }
-
-

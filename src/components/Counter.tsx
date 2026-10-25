@@ -1,69 +1,71 @@
-// App.js
-import { useCallback, useEffect, useState, useRef } from "react";
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 
 const counters = [
-  { value: 700, label: "Happy Customers" },
-  { value: 50, label: "Products Available" },
-  { value: 25, label: "Years Experience" },
+  { value: 700, label: "Happy customers" },
+  { value: 50, label: "Products available" },
+  { value: 25, label: "Years experience" },
 ];
 
-// eslint-disable-next-line react/prop-types
-function Counter({ value, label }: { value: number; label: string }) {
-  const [count, setCount] = useState(0);
+function Counter({ value, label }: (typeof counters)[number]) {
   const ref = useRef<HTMLDivElement>(null);
-  const hasAnimated = useRef(false);
-  const animateCount = useCallback(() => {
-    let start = 0;
-    const duration = 2000; // 2 seconds
-    const stepTime = Math.abs(Math.floor(duration / value));
-    const timer = setInterval(() => {
-      start += 1;
-      setCount(start);
-      if (start === value) clearInterval(timer);
-    }, stepTime);
-  }, [value]);
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     const element = ref.current;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated.current) {
-            animateCount();
-            hasAnimated.current = true;
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    if (element) {
-      observer.observe(element);
-    }
-
-    return () => {
-      if (element) {
-        observer.unobserve(element);
+    if (!element) return;
+    let frame = 0;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reducedMotion) {
+        setCount(value);
+      } else {
+        const start = performance.now();
+        const duration = 1400;
+        const animate = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 4);
+          setCount(Math.round(value * eased));
+          if (progress < 1) frame = requestAnimationFrame(animate);
+        };
+        frame = requestAnimationFrame(animate);
+        observer.disconnect();
       }
+      observer.disconnect();
+    }, { threshold: 0.4 });
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
     };
-  }, [animateCount]);
+  }, [value]);
 
   return (
-    <div className="flex flex-col items-center" ref={ref}>
-      <span className="text-4xl font-bold text-purple-600">{count}+</span>
-      <span className="mt-2 text-lg text-gray-800">{label}</span>
+    <div ref={ref} className="group relative overflow-hidden rounded-lg border border-editorial-muted/20 bg-editorial-mid/40 p-5 transition-transform duration-normal hover:-translate-y-1 sm:p-7">
+      <span className="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-semibold leading-none tracking-tight text-editorial-text tabular-nums">{count}<span className="text-gold">+</span></span>
+      <p className="mt-3 text-sm font-semibold uppercase tracking-[0.12em] text-editorial-muted">{label}</p>
+      <span className="absolute -bottom-8 -right-4 h-24 w-24 rounded-full border border-editorial-muted/15 transition-transform duration-slow group-hover:scale-125" aria-hidden="true" />
     </div>
   );
 }
 
-function CounterShow() {
+export default function CounterShow() {
   return (
-    <div className="flex justify-around py-12 bg-white sm:flex-wrap">
-      {counters.map((counter, index) => (
-        <Counter key={index} value={counter.value} label={counter.label} />
-      ))}
-    </div>
+    <section className="relative overflow-hidden bg-editorial-dark py-14 text-editorial-text sm:py-20" aria-labelledby="proof-title">
+      <div className="page-shell">
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">A little perspective</p>
+            <h2 id="proof-title" className="mt-3 max-w-md font-display text-heading-lg font-semibold">Built around the game.</h2>
+            <p className="mt-4 max-w-md text-sm leading-6 text-editorial-muted">A snapshot of the experience and selection OM Billiard brings to cue sports.</p>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3 sm:gap-4">
+            {counters.map((counter) => <Counter key={counter.label} {...counter} />)}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
-
-export default CounterShow;

@@ -1,59 +1,41 @@
-
-import AOS from "aos";
-import { useEffect } from "react";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { ButtonLink } from "./ui/Button";
 
 const features = [
-  { id: "01", title: "Quality", icon: "💡" },
-  { id: "02", title: "Variety", icon: "🔍" },
-  { id: "03", title: "Service", icon: "👥" },
-  { id: "04", title: "Expertise", icon: "📄" },
-  { id: "05", title: "Support", icon: "👍" },
+  { number: "01", title: "Find your fit", text: "Pool, snooker, American and table-tennis combinations sit alongside cues, balls and accessories.", tag: "Selection" },
+  { number: "02", title: "Make it play right", text: "Talk with our team about table sizing, room planning, setup and installation.", tag: "Guidance" },
+  { number: "03", title: "Keep the game going", text: "Ask about maintenance and care, including table upkeep and repairs.", tag: "Aftercare" },
 ];
 
 export default function WhyChooseUs() {
-  useEffect(() => {
-    AOS.init({ duration: 600, easing: "ease-in-out", once: false });
-  }, []);
-
   return (
-    <div className="px-4 py-12 bg-gray-50 sm:px-6 lg:px-8 mb-8">
-      <div className="text-center mb-12">
-        <h2
-          className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl"
-          data-aos="fade-up"
-        >
-          Why Choose Us?
-        </h2>
-        <p
-          className="mt-2 text-lg text-gray-600"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
-          Your one-stop shop for all things pool! Quality, service, and style
-          await!
-        </p>
-      </div>
-
-      <div
-        className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3"
-        data-aos="fade-up"
-        data-aos-delay="200"
-      >
-        {features.map((feature, index) => (
-          <div
-            key={index}
-            className="flex flex-col items-center justify-center p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300"
-            data-aos="fade-up"
-            data-aos-delay={`${index * 100}`}
-          >
-            <span className="text-4xl">{feature.icon}</span>
-            <h3 className="mt-4 text-xl font-semibold text-gray-800">
-              {feature.title}
-            </h3>
+    <section className="section-space bg-surface px-gutter" aria-labelledby="why-title">
+      <div className="page-shell">
+        <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold-dark">The OM Billiard difference</p>
+            <h2 id="why-title" className="mt-3 max-w-xl font-display text-heading-lg font-semibold">More than a table. A partner for the whole game.</h2>
           </div>
-        ))}
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+            <p className="max-w-xl text-base leading-7 text-muted">From choosing a table to caring for it over time, OM Billiard brings equipment and practical support together in one place.</p>
+            <ButtonLink href="/services" variant="quiet" className="shrink-0 self-start sm:self-auto">Meet our services <ArrowRightIcon className="h-4 w-4" /></ButtonLink>
+          </div>
+        </div>
+
+        <div className="mt-10 grid gap-4 lg:grid-cols-3">
+          {features.map((feature, index) => (
+            <article key={feature.number} className="group relative min-h-64 overflow-hidden rounded-xl border border-line bg-bg p-6 transition-all duration-normal hover:-translate-y-1 hover:border-sand hover:shadow-card sm:p-8">
+              <div className="flex items-start justify-between">
+                <span className="font-display text-4xl font-semibold text-sand/70 transition-colors group-hover:text-gold">{feature.number}</span>
+                <span className="rounded-full border border-line bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-sage-dark">{feature.tag}</span>
+              </div>
+              <h3 className="mt-10 font-display text-heading-sm font-semibold text-ink">{feature.title}</h3>
+              <p className="mt-3 max-w-sm text-sm leading-6 text-muted">{feature.text}</p>
+              <span className={`absolute -bottom-12 -right-8 h-32 w-32 rounded-full border border-sand/40 transition-transform duration-slow group-hover:scale-125 ${index === 1 ? "border-sage/50" : ""}`} aria-hidden="true" />
+            </article>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
-
