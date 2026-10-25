@@ -10,7 +10,7 @@ const counters = [
 
 function Counter({ value, label }: (typeof counters)[number]) {
   const ref = useRef<HTMLDivElement>(null);
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(value);
 
   useEffect(() => {
     const element = ref.current;
@@ -22,6 +22,7 @@ function Counter({ value, label }: (typeof counters)[number]) {
       if (reducedMotion) {
         setCount(value);
       } else {
+        setCount(0);
         const start = performance.now();
         const duration = 1400;
         const animate = (now: number) => {
@@ -46,7 +47,7 @@ function Counter({ value, label }: (typeof counters)[number]) {
     <div ref={ref} className="group relative overflow-hidden rounded-lg border border-editorial-muted/20 bg-editorial-mid/40 p-5 transition-transform duration-normal hover:-translate-y-1 sm:p-7">
       <span className="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-semibold leading-none tracking-tight text-editorial-text tabular-nums">{count}<span className="text-gold">+</span></span>
       <p className="mt-3 text-sm font-semibold uppercase tracking-[0.12em] text-editorial-muted">{label}</p>
-      <span className="absolute -bottom-8 -right-4 h-24 w-24 rounded-full border border-editorial-muted/15 transition-transform duration-slow group-hover:scale-125" aria-hidden="true" />
+      <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-gold transition-all duration-slow group-hover:w-full" aria-hidden="true" />
     </div>
   );
 }

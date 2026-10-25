@@ -13,28 +13,27 @@ const navigation = [
   { name: "Cues", href: "/billiard-cue" },
   { name: "Services", href: "/services" },
   { name: "Brands", href: "/brands" },
+  { name: "Contact", href: "/#contact" },
 ];
 
 function isCurrent(pathname: string, href: string) {
-  return href === "/products"
-    ? pathname === href || pathname.startsWith(`${href}/`)
-    : pathname === href || pathname.startsWith(`${href}/`);
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 export default function NavBar() {
   const pathname = usePathname();
 
   return (
-    <Disclosure as="header" className="sticky top-0 z-header border-b border-line bg-surface/95 backdrop-blur">
+    <Disclosure key={pathname} as="header" className="sticky top-0 z-header border-b border-line bg-surface/95 backdrop-blur">
       {({ open }) => (
         <>
-          <div className="page-shell flex min-h-16 items-center justify-between gap-5 py-2 lg:min-h-[5.25rem]">
+          <div className="page-shell flex min-h-16 items-center justify-between gap-5 py-2 xl:min-h-[5.25rem]">
             <Link to="/" className="group flex shrink-0 items-center gap-3" aria-label="OM Billiard home">
               <span className="grid h-10 w-10 place-items-center rounded-full border border-sand bg-bg font-display text-base font-bold text-ink transition-colors group-hover:bg-surface-2" aria-hidden="true">OM</span>
               <span className="font-display text-lg font-semibold tracking-tight text-ink sm:text-xl">OM Billiard</span>
             </Link>
 
-            <nav aria-label="Main navigation" className="hidden flex-1 items-center justify-center gap-1 lg:flex">
+            <nav aria-label="Main navigation" className="hidden flex-1 items-center justify-center gap-1 xl:flex">
               {navigation.map((item) => {
                 const current = isCurrent(pathname, item.href);
                 return (
@@ -50,18 +49,18 @@ export default function NavBar() {
               })}
             </nav>
 
-            <div className="hidden shrink-0 items-center gap-2 lg:flex">
+            <div className="hidden shrink-0 items-center gap-2 xl:flex">
               <ButtonLink href="/products" size="sm">Explore products</ButtonLink>
             </div>
 
-            <div className="flex items-center gap-2 lg:hidden">
+            <div className="flex items-center gap-2 xl:hidden">
               <Disclosure.Button className="grid h-11 w-11 place-items-center rounded-full border border-line bg-surface text-ink transition-colors hover:bg-bg" aria-label={open ? "Close navigation menu" : "Open navigation menu"}>
                 {open ? <XMarkIcon className="h-5 w-5" aria-hidden="true" /> : <Bars3Icon className="h-5 w-5" aria-hidden="true" />}
               </Disclosure.Button>
             </div>
           </div>
 
-          <Disclosure.Panel className="border-t border-line bg-surface lg:hidden">
+          <Disclosure.Panel className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-line bg-surface xl:hidden">
             <nav aria-label="Mobile navigation" className="page-shell grid gap-1 py-3">
               {navigation.map((item) => {
                 const current = isCurrent(pathname, item.href);
@@ -77,7 +76,6 @@ export default function NavBar() {
                   </Disclosure.Button>
                 );
               })}
-              <ButtonLink href="/products" size="md" className="mt-2 w-full">Explore products</ButtonLink>
             </nav>
           </Disclosure.Panel>
         </>

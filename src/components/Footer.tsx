@@ -21,6 +21,13 @@ export default function Footer() {
           <p className="mt-4 max-w-sm text-sm leading-6 text-editorial-muted">
             Tables, cues and support for the game room you have in mind.
           </p>
+          <div className="footer-credit-art" aria-hidden="true">
+            <div className="footer-credit-orbit" />
+            <div className="footer-credit-track" />
+            <div className="footer-credit-ball"><span>8</span></div>
+            <div className="footer-credit-spark footer-credit-spark-one" />
+            <div className="footer-credit-spark footer-credit-spark-two" />
+          </div>
         </div>
 
         <div>
@@ -57,7 +64,7 @@ export default function Footer() {
       <div className="border-t border-editorial-muted/15">
         <div className="page-shell flex flex-col gap-2 py-4 text-xs text-editorial-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} OM Billiard. All rights reserved.</p>
-          <p>Pool, snooker and cue sports equipment.</p>
+          <p>Developed &amp; maintained by <a href="https://ankitsharma745.github.io/" target="_blank" rel="noopener noreferrer" className="footer-developer-link">Ankit Sharma <span aria-hidden="true">↗</span></a></p>
         </div>
       </div>
     </footer>

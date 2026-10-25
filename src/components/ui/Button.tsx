@@ -1,17 +1,18 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { Link } from "../../lib/navigation";
 
-type ButtonVariant = "primary" | "secondary" | "quiet";
+type ButtonVariant = "primary" | "secondary" | "quiet" | "inverse";
 type ButtonSize = "sm" | "md" | "lg";
 
 const variants: Record<ButtonVariant, string> = {
   primary: "bg-ink text-surface hover:bg-editorial-mid focus-visible:outline-gold-dark",
   secondary: "border border-line bg-surface text-ink hover:border-sage-dark hover:bg-surface-2 focus-visible:outline-gold-dark",
   quiet: "bg-transparent text-ink hover:bg-surface-2 focus-visible:outline-gold-dark",
+  inverse: "border border-editorial-muted/70 bg-transparent !text-editorial-text hover:border-editorial-text hover:bg-editorial-text hover:!text-editorial-dark focus-visible:outline-editorial-text",
 };
 
 const sizes: Record<ButtonSize, string> = {
-  sm: "min-h-10 px-4 text-sm",
+  sm: "min-h-11 px-4 text-sm",
   md: "min-h-12 px-5 text-sm sm:text-base",
   lg: "min-h-14 px-7 text-base",
 };

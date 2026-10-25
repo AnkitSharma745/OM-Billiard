@@ -64,3 +64,11 @@ Implemented the supplied warm theme in `app/globals.css`, `tailwind.config.js`, 
 6. **Done:** Product detail lookup by route ID with existing product data and inquiry action.
 7. **Done:** Brands, services, login, signup, contact, FAQ, and inquiry modal presentations. Existing EmailJS/Formik behavior is retained; account screens remain clearly non-persistent prototypes.
 8. **Source review only:** The brief explicitly prohibits builds, lint, tests, screenshot QA/runtime verification, and package installs. These checks have not been run.
+
+## Current UI and search pass
+
+- Homepage opener now has three local photographic views, accessible controls, a clear product action and service action, and reduced-motion-aware visual movement.
+- Interactive table discovery presents pool, snooker and multi-use examples from the actual local catalog. Category and product-detail routes have additional photography and contextual navigation.
+- Mobile category/featured collections use horizontal snap browsing. The header switches to its compact menu at tablet widths, and touch actions have at least 44px height.
+- The former clipped circular corner accents were replaced with restrained rails or gradients. Dark surfaces use an explicit high-contrast button variant.
+- Canonicals, route metadata, social previews, favicon, sitemap, robots, Store schema, Product schema and product breadcrumbs are implemented. See `docs/seo-content-roadmap.md` for the factual content still needed before a stronger local search campaign.

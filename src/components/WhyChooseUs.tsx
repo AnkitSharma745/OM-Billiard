@@ -9,7 +9,7 @@ const features = [
 
 export default function WhyChooseUs() {
   return (
-    <section className="section-space bg-surface px-gutter" aria-labelledby="why-title">
+    <section className="section-space bg-surface" aria-labelledby="why-title">
       <div className="page-shell">
         <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
           <div>
@@ -23,7 +23,7 @@ export default function WhyChooseUs() {
         </div>
 
         <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <article key={feature.number} className="group relative min-h-64 overflow-hidden rounded-xl border border-line bg-bg p-6 transition-all duration-normal hover:-translate-y-1 hover:border-sand hover:shadow-card sm:p-8">
               <div className="flex items-start justify-between">
                 <span className="font-display text-4xl font-semibold text-sand/70 transition-colors group-hover:text-gold">{feature.number}</span>
@@ -31,7 +31,7 @@ export default function WhyChooseUs() {
               </div>
               <h3 className="mt-10 font-display text-heading-sm font-semibold text-ink">{feature.title}</h3>
               <p className="mt-3 max-w-sm text-sm leading-6 text-muted">{feature.text}</p>
-              <span className={`absolute -bottom-12 -right-8 h-32 w-32 rounded-full border border-sand/40 transition-transform duration-slow group-hover:scale-125 ${index === 1 ? "border-sage/50" : ""}`} aria-hidden="true" />
+              <span className="mt-7 flex items-center gap-2" aria-hidden="true"><span className="h-0.5 w-10 rounded-full bg-gold transition-all duration-normal group-hover:w-16" /><span className="h-1.5 w-1.5 rounded-full bg-gold" /></span>
             </article>
           ))}
         </div>
