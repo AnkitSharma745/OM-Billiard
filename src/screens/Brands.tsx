@@ -1,6 +1,7 @@
 import Aramith from "../assets/Brands/Aramith_Logo_Brand.avif";
 import Wiraka from "../assets/Brands/Wiraka_Image.png";
 import Talisman from "../assets/Brands/TalisMan.jpeg";
+import OptimizedImage from "../components/OptimizedImage";
 
 const brands = [
   {
@@ -35,7 +36,12 @@ const Brands = () => {
               data-aos="flip-left"
               data-aos-delay={`${index * 100}`}
             >
-              <img src={brand.logo.src} alt={brand.name} className="w-52 m-auto" />
+              <OptimizedImage
+                src={brand.logo}
+                alt={brand.name}
+                className="w-52 h-auto m-auto"
+                sizes="(max-width: 768px) 70vw, 17rem"
+              />
               <div className="p-6">
                 <h2 className="text-2xl font-semibold mb-2">{brand.name}</h2>
                 <p className="text-gray-600">{brand.description}</p>

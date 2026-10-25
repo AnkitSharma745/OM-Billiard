@@ -11,6 +11,7 @@ import { placeholderProduct, images } from "../Data/data";
 import NavBar from "../components/NavBar";
 import ContactUs from "../components/ContactUs";
 import { Helmet } from "react-helmet";
+import OptimizedImage from "../components/OptimizedImage";
 
 function Home() {
   const settings = {
@@ -46,13 +47,16 @@ function Home() {
         <Slider {...settings}>
           {images.map((image, index) => (
             <div key={index}>
-              <div
-                className="w-full h-screen bg-cover bg-center transform transition-transform duration-700 scale-105 hover:scale-110"
-                style={{
-                  backgroundImage: `url(${image.src})`,
-                  height: "600px",
-                }}
-              />
+              <div className="relative h-[600px] w-full overflow-hidden">
+                <OptimizedImage
+                  src={image}
+                  alt=""
+                  fill
+                  preload={index === 0}
+                  sizes="100vw"
+                  className="h-full w-full scale-105 object-cover object-center transition-transform duration-700 hover:scale-110"
+                />
+              </div>
             </div>
           ))}
         </Slider>
@@ -79,10 +83,11 @@ function Home() {
                 key={product.id}
                 className="rounded-3xl shadow-lg overflow-hidden transition-transform transform hover:scale-105 hover:shadow-lg"
               >
-                <img
-                  src={product.imageSrc.src}
+                <OptimizedImage
+                  src={product.imageSrc}
                   alt={product.imageAlt}
                   className="h-96 w-full object-cover rounded-3xl"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="p-6 flex flex-col justify-center text-center">
                   <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
@@ -99,10 +104,11 @@ function Home() {
 
       <div className="w-[98%] sm:h-2 m-auto flex items-center justify-center min-h-screen bg-yellow-300 px-4">
         <div className="w-full max-w-2xl flex flex-col items-center text-center space-y-6 p-6 rounded-lg">
-          <img
-            src={Balls.src}
+          <OptimizedImage
+            src={Balls}
             className="w-96 h-auto transition-transform transform hover:scale-105 "
             alt="Center Image"
+            sizes="(max-width: 768px) 80vw, 24rem"
           />
           <h1
             className="text-5xl

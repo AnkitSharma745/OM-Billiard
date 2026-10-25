@@ -89,6 +89,7 @@ const ProductDetail = () => {
           showThumbnails
           showFullscreenButton
           showPlayButton={false}
+          lazyLoad
         />
       </ImageWrapper>
 

@@ -3,6 +3,7 @@ import AOS from "aos";
 
 import { useEffect } from "react";
 import OrderNowModal from "./OrderFormModal";
+import OptimizedImage from "./OptimizedImage";
 
 const Stick = () => {
   useEffect(() => {
@@ -22,10 +23,11 @@ const Stick = () => {
             data-aos="fade-up"
             data-aos-delay={`${index * 100}`}
           >
-            <img
-              src={product.img.src}
+            <OptimizedImage
+              src={product.img}
               alt={product.name}
               className="w-full h-56 object-cover transition-transform duration-300 transform hover:scale-110"
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
             <div className="p-6">
               <h3 className="text-2xl font-semibold mb-3 text-gray-800">

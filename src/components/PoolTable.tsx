@@ -3,6 +3,7 @@ import PoolTableData from "../Data/poolTable";
 import OrderNowModal from "./OrderFormModal";
 import FoosBall from "../assets/Product_Category/Foosball.jpg";
 import type { ProductDetails } from "../lib/types";
+import OptimizedImage from "./OptimizedImage";
 
 function PoolTable() {
   const Navigate = useNavigate();
@@ -23,10 +24,11 @@ function PoolTable() {
             data-aos="fade-up"
             data-aos-delay={`${index * 100}`}
           >
-            <img
-              src={product.details.images[0].original}
+            <OptimizedImage
+              src={product.img}
               alt={product.name}
               className="w-full h-56 object-cover transition-transform duration-300 transform hover:scale-110"
+              sizes="(max-width: 768px) 100vw, 33vw"
             />
             <div className="p-6">
               <h2 className="text-2xl font-semibold mb-3 text-gray-800">
@@ -46,10 +48,11 @@ function PoolTable() {
           </div>
         ))}
         <div className="bg-white shadow-xl rounded-lg overflow-hidden hover:shadow-2xl transition-transform duration-300 transform hover:-translate-y-2">
-          <img
+          <OptimizedImage
             className="w-full h-56 object-cover transition-transform duration-300 transform hover:scale-110"
-            src={FoosBall.src}
+            src={FoosBall}
             alt="Foosball table "
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
           <div className="p-6">
             <h2 className="text-2xl font-semibold mb-3 text-gray-800">

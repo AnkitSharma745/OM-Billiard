@@ -3,6 +3,7 @@ import AOS from "aos";
 
 import { useEffect } from "react";
 import OrderNowModal from "./OrderFormModal";
+import OptimizedImage from "./OptimizedImage";
 
 const Balls = () => {
   useEffect(() => {
@@ -23,10 +24,11 @@ const Balls = () => {
             data-aos-delay={`${index * 100}`}
           >
             <div className="flex justify-center items-center bg-gray-100">
-              <img
-                src={product.img.src}
+              <OptimizedImage
+                src={product.img}
                 alt={product.name}
                 className="w-full h-48 object-contain p-4 transition-transform duration-300 transform hover:scale-110"
+                sizes="(max-width: 768px) 100vw, 33vw"
               />
             </div>
             <div className="p-6">

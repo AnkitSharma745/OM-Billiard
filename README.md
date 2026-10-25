@@ -32,3 +32,5 @@ Open [http://localhost:3000](http://localhost:3000).
 - `src/assets/` contains the existing product and brand imagery.
 
 The TypeScript compiler runs in strict mode. New application files should use `.ts` or `.tsx` extensions.
+
+See [DESIGN_SYSTEM.md](./DESIGN_SYSTEM.md) for the palette, typography, responsive layout, media loading, and asset storage decisions.

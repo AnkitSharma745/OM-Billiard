@@ -1,14 +1,116 @@
 @import "aos/dist/aos.css";
 @import "react-image-gallery/styles/css/image-gallery.css";
+@import "@fontsource-variable/dm-sans";
+@import "@fontsource-variable/manrope";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: light;
+  --color-ink: #102033;
+  --color-ink-soft: #24374a;
+  --color-ink-muted: #667789;
+  --color-felt: #126b5b;
+  --color-felt-dark: #0c5147;
+  --color-brass: #b88a45;
+  --color-canvas: #f6f7f5;
+  --color-surface: #ffffff;
+  --color-line: #e1e6e8;
+  --page-gutter: clamp(1rem, 4vw, 4rem);
+  --content-width: 80rem;
+  font-family: "DM Sans", Aptos, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+}
+
 body {
   margin: 0;
   padding: 0;
-  font-family: "Inter", sans-serif;
+  min-width: 320px;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: "DM Sans", Aptos, "Segoe UI", sans-serif;
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.125rem);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Manrope, "DM Sans", sans-serif;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-brass);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: #cfe8df;
+  color: var(--color-ink);
+}
+
+.page-shell {
+  width: min(calc(100% - 2 * var(--page-gutter)), var(--content-width));
+  margin-inline: auto;
+}
+
+.media-skeleton {
+  background-color: #e8eceb;
+  background-image: linear-gradient(100deg, #e8eceb 20%, #f5f7f6 40%, #e8eceb 60%);
+  background-size: 200% 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .slick-prev,
+  .slick-next {
+    display: none !important;
+  }
 }
 
 .carousel-container {

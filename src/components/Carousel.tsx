@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { images } from "../Data/data";
 import type { CustomArrowProps } from "react-slick";
+import OptimizedImage from "./OptimizedImage";
 
 const Carousel = () => {
   const MotionDiv: any = motion.div;
@@ -31,10 +32,11 @@ const Carousel = () => {
             animate={{ rotateY: 0, opacity: 1 }}
             transition={{ duration: 0.7 }}
           >
-            <img
-              src={image.src}
+            <OptimizedImage
+              src={image}
               alt={`Slide ${index + 1}`}
               className="rounded-lg object-cover w-full h-[400px] sm:h-[500px] lg:h-[600px]"
+              sizes="100vw"
             />
           </MotionDiv>
         ))}

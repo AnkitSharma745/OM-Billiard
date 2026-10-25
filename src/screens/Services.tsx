@@ -1,6 +1,7 @@
 import Instalation from "../assets/Services/2024-04-12-11_3437am-Set_3__png.webp";
 import Maintenance from "../assets/Services/maintenance.png";
 import Custom from "../assets/Services/pool-table-repair-service-1000x1000.webp";
+import OptimizedImage from "../components/OptimizedImage";
 const services = [
   {
     title: "Table Installation",
@@ -35,10 +36,11 @@ const Services = () => {
               data-aos="flip-right"
               data-aos-delay={`${index * 100}`}
             >
-              <img
-                src={service.image.src}
+              <OptimizedImage
+                src={service.image}
                 alt={service.title}
                 className="w-full h-48 object-cover"
+                sizes="(max-width: 768px) 100vw, 33vw"
               />
               <div className="p-6">
                 <h2 className="text-2xl font-semibold mb-2">{service.title}</h2>
